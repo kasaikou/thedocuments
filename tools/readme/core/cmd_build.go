@@ -8,6 +8,7 @@ import (
 	"log/slog"
 	"os"
 	"path/filepath"
+	"sort"
 	"sync"
 	"text/template"
 
@@ -137,7 +138,57 @@ func Build(ctx context.Context, configFilename string) error {
 			artifact.Content = append(artifact.Content, objectArtifact)
 			mapDirConfig[dirname] = artifact
 		}
+	}
 
+	mapDirMapSubdirs := map[string]map[string]struct{}{}
+	dirnames := make([]string, 0, len(mapDirConfig))
+	for k := range mapDirConfig {
+		dirnames = append(dirnames, k)
+	}
+
+	for i := 0; i < len(dirnames); i++ {
+		dirname := dirnames[i]
+		parent := filepath.Dir(dirname)
+
+		mapParentSubdirs, exist := mapDirMapSubdirs[parent]
+		if exist {
+			mapParentSubdirs[dirname] = struct{}{}
+		} else if dirname != configDir {
+			dirnames = append(dirnames, parent)
+			if _, exist := mapDirMapSubdirs[dirname]; !exist {
+				dirnames = append(dirnames, dirname)
+			}
+		}
+
+		if _, exist := mapDirMapSubdirs[dirname]; !exist {
+			mapDirMapSubdirs[dirname] = map[string]struct{}{}
+			if _, exist := mapDirConfig[dirname]; !exist {
+				artifact := DirectoryArtifactTemplate{}
+				if path, err := FromAbsPath(configDir, dirname); err != nil {
+					logger.Error("Failed to create path object", slog.Any("error", err))
+					return newErrFailedBuild(configFilename, err)
+				} else {
+					artifact.Path = path
+				}
+				mapDirConfig[dirname] = artifact
+			}
+		}
+	}
+
+	for parent, mapDirChildrens := range mapDirMapSubdirs {
+		children := make([]string, 0, len(mapDirChildrens))
+		for k := range mapDirChildrens {
+			children = append(children, k)
+		}
+
+		sort.Strings(children)
+		parentConfig := mapDirConfig[parent]
+		parentConfig.SubDirectories = make([]*DirectoryArtifactTemplate, 0, len(children))
+		for _, child := range children {
+			childConfig := mapDirConfig[child]
+			parentConfig.SubDirectories = append(parentConfig.SubDirectories, &childConfig)
+		}
+		mapDirConfig[parent] = parentConfig
 	}
 
 	wg := sync.WaitGroup{}

@@ -7,10 +7,11 @@ import (
 )
 
 type DirectoryArtifactTemplate struct {
-	Title       string
-	Path        PathTemplate
-	Description string
-	Content     []ArtifactTemplate
+	Title          string
+	Path           PathTemplate
+	Description    string
+	Content        []ArtifactTemplate
+	SubDirectories []*DirectoryArtifactTemplate
 }
 
 type ArtifactTemplate struct {
