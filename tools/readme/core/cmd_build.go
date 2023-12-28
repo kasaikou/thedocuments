@@ -2,7 +2,6 @@ package core
 
 import (
 	"context"
-	"encoding/json"
 	"errors"
 	"fmt"
 	"log/slog"
@@ -13,7 +12,6 @@ import (
 	"text/template"
 
 	"github.com/kasaikou/thedocuments/tools"
-	"gopkg.in/yaml.v3"
 )
 
 func newErrFailedBuild(configFilename string, includes ...error) error {
@@ -29,41 +27,11 @@ func Build(ctx context.Context, configFilename string) error {
 	logger := tools.LoggerFromContext(ctx)
 	logger = logger.With(slog.String("configFile", configFilename))
 
-	if !filepath.IsAbs(configFilename) {
-		panic("configFilename argument must be absolute filepath")
-	}
-
 	configDir := filepath.Dir(configFilename)
-	configExt := filepath.Ext(configFilename)
-	configReader, err := os.Open(configFilename)
-
+	config, err := LoadAndFormat(ctx, configFilename)
 	if err != nil {
-		logger.Error("Cannot open config file", slog.Any("error", err))
-		return newErrFailedBuild(configFilename, err)
+		logger.Error("could not load config file", slog.Any("error", err))
 	}
-
-	var decoder interface{ Decode(any) error }
-	switch configExt {
-	case ".yml", ".yaml":
-		decoder = yaml.NewDecoder(configReader)
-	case ".json":
-		decoder = json.NewDecoder(configReader)
-	default:
-		logger.Error("Unknown file ext", slog.String("ext", configExt))
-		return newErrFailedBuild(configFilename)
-	}
-
-	var config ArtifactConfig
-	if err := decoder.Decode(&config); err != nil {
-		logger.Error("Failed to unmarshal with format", slog.String("ext", configExt), slog.Any("error", err))
-		return newErrFailedBuild(configFilename, err)
-	}
-
-	for i := range config.Objects {
-		config.Objects[i].Sort("path")
-	}
-
-	config.Sort()
 
 	mapDirConfig := map[string]DirectoryArtifactTemplate{}
 	for _, object := range config.Objects {
