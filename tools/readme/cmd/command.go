@@ -1,9 +1,12 @@
 package cmd
 
 import (
+	"context"
 	"log"
 	"os"
+	"path/filepath"
 
+	"github.com/kasaikou/thedocuments/tools/readme/core"
 	"github.com/spf13/cobra"
 )
 
@@ -27,6 +30,8 @@ var buildCmd = &cobra.Command{
 	Use: "build",
 	Run: func(cmd *cobra.Command, args []string) {
 		log.Println("readme build")
+		wd, _ := os.Getwd()
+		core.Build(context.Background(), filepath.Join(wd, "readme.config.yaml"))
 	},
 }
 

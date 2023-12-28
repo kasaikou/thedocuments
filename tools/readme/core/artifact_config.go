@@ -7,8 +7,9 @@ import (
 )
 
 type ArtifactConfig struct {
-	Layout  string           `yaml:"layout"`
-	Objects []ArtifactObject `yaml:"objects"`
+	OutputFilename string           `yaml:"output"`
+	Layout         string           `yaml:"layout"`
+	Objects        []ArtifactObject `yaml:"objects"`
 }
 
 type ArtifactObject struct {
