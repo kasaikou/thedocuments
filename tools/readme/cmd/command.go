@@ -31,7 +31,10 @@ var buildCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		log.Println("readme build")
 		wd, _ := os.Getwd()
-		core.Build(context.Background(), filepath.Join(wd, "readme.config.yaml"))
+		if err := core.Build(context.Background(), filepath.Join(wd, "readme.config.yaml")); err != nil {
+			log.Println(err)
+			os.Exit(1)
+		}
 	},
 }
 

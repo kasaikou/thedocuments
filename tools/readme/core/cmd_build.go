@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"log"
 	"os"
 	"path/filepath"
 	"sync"
@@ -29,9 +30,9 @@ func Build(ctx context.Context, configFilename string) error {
 
 	var decoder interface{ Decode(any) error }
 	switch configExt {
-	case "yml", "yaml":
+	case ".yml", ".yaml":
 		decoder = yaml.NewDecoder(configReader)
-	case "json":
+	case ".json":
 		decoder = json.NewDecoder(configReader)
 	default:
 		return fmt.Errorf("unknown file ext '%s'", configExt)
@@ -133,7 +134,10 @@ func Build(ctx context.Context, configFilename string) error {
 		wholeErr = append(wholeErr, err)
 	}
 
+	log.Println("Scheduled", len(mapDirConfig), "save artifacts")
+
 	for _, artifact := range mapDirConfig {
+		wg.Add(1)
 		go func(artifact DirectoryArtifactTemplate) {
 			defer wg.Done()
 			tmpl, err := tmpl.Clone()
