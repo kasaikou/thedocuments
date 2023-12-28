@@ -135,7 +135,7 @@ func Build(ctx context.Context, configFilename string) error {
 				}
 			}
 
-			artifact.Content = append(artifact.Content, objectArtifact)
+			artifact.Items = append(artifact.Items, objectArtifact)
 			mapDirConfig[dirname] = artifact
 		}
 	}

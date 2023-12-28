@@ -10,7 +10,7 @@ type DirectoryArtifactTemplate struct {
 	Title          string
 	Path           PathTemplate
 	Description    string
-	Content        []ArtifactTemplate
+	Items          []ArtifactTemplate
 	SubDirectories []*DirectoryArtifactTemplate
 }
 

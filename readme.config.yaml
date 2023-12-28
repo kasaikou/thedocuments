@@ -1,0 +1,17 @@
+output: README.md
+layout: |
+  # {{ .Path.Basename }}{{ if .Title }}: {{ .Title }}{{ end }}
+
+  {{ if .Description }}## Description
+
+  {{ .Description }}{{ end }}{{ if len .Items }}## Files
+  {{ range $file := .Items }}{{ end }}{{ end }}{{ if len .SubDirectories }}## Sub Directories
+
+  {{ range $subDir := .SubDirectories }}- **[{{ $subDir.Path.Basename }}](./{{ $subDir.Path.Basename }})**
+  {{ end }}{{ end }}
+objects:
+  - title: "readme: Documentation builder built in Go"
+    path: tools/readme
+    description: |
+      This is documentation tool.
+      (TODO: Write continue)
