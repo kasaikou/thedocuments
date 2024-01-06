@@ -1,0 +1,28 @@
+name: その他チケット
+description: 他に該当しないときに発行するチケット（後日ラベリングされる可能性はちょっとある）
+title: "[Other]: ${category}: ${ticketName}"
+labels: [other]
+projects: ["kasaikou/8"]
+assignees:
+  - kasaikou
+body:
+  - type: textarea
+    attributes:
+      label: 背景
+      description: なぜこの Issue を書いているのかを書く
+  - type: textarea
+    attributes:
+      label: 内容
+      description: 何ができるようになればよいのかを書く
+  - type: textarea
+    attributes:
+      label: Sub Tasks
+      placeholder: >
+        - #1
+        - #2
+        - #3
+  - type: textarea
+    attributes:
+      label: Tips
+      placeholder: >
+        - URLs
