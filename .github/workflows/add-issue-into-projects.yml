@@ -32,5 +32,5 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.USER_PAT_GITHUB_PROJECT }}
         run: |
-          gh project item-list ${{ env.PROJECT_NUMBER }} --format json --owner @me > item_config.json
+          gh project item-add ${{ env.PROJECT_NUMBER }} --format json --owner @me --url https://github.com/kasaikou/thedocuments/issues/10 > item_config.json
           cat item_config.json
