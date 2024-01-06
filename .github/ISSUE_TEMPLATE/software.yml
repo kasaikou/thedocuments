@@ -1,5 +1,5 @@
 name: ソフトウェア作成チケット
-description: 何かソフトウェア（管理ツール含む）やサービスを作る際に発行するチケット
+description: 何かソフトウェア（管理ツール含む）やサービス，仕組みを作る際に発行するチケット
 title: "[Software]: ${category}: ${ticketName}"
 labels: [software]
 projects: ["kasaikou/8"]
