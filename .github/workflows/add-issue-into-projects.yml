@@ -17,10 +17,9 @@ jobs:
         run: |
           gh project field-list ${{ env.PROJECT_NUMBER }} --format json --owner @me > project_config.json
           echo 'STATUS_ID='$(jq '.fields[] | select(.name=="Status") | .id' project_config.json) >> $GITHUB_ENV
-          echo 'STATUS_TODO_ID='$(jq '.fields[] | select(.name=="Status")' | .options[] | select(.name=="Todo") | .id' project_config.json) >> $GITHUB_ENV
+          echo 'STATUS_TODO_ID='$(jq '.fields[] | select(.name=="Status") | .options[] | select(.name=="Todo") | .id' project_config.json) >> $GITHUB_ENV
           echo 'START_DATE_ID='$(jq '.fields[] | select(.name=="Start date") | .id' project_config.json) >> $GITHUB_ENV
-          echo 'END_DATE_ID='$(jq '.fields[] | select(.name=="End date") | .id' project_config.json) >> $GITHUB_ENV
-        
+          echo 'END_DATE_ID='$(jq '.fields[] | select(.name=="End date") | .id' project_config.json) >> $GITHUB_ENV        
       - name: project/get-date
         run: |
           echo "START_DATE=$(date +"%Y-%m-%d")" >> $GITHUB_ENV
