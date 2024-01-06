@@ -36,6 +36,8 @@ jobs:
           cat item_config.json
           echo 'ITEM_ID='$(jq '.id' item_config.json) >> $GITHUB_ENV
       - name: project/set-values
+        env:
+          GH_TOKEN: ${{ secrets.USER_PAT_GITHUB_PROJECT }}
         run: |
           gh project item-edit --format json --project-id ${{ env.PROJECT_ID }} --id ${{ env.ITEM_ID }} --field-id ${{ env.STATUS_ID }} --single-select-option-id ${{ env.STATUS_TODO_ID }}
           gh project item-edit --format json --project-id ${{ env.PROJECT_ID }} --id ${{ env.ITEM_ID }} --field-id ${{ env.START_DATE_ID }} --date ${{ env.START_DATE }}
