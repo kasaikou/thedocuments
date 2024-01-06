@@ -1,5 +1,7 @@
 on:
   push:
+    branches:
+      - main
     paths:
       - .github/workflows/add-issue-into-projects.yml
       - .github/workflows/copy-issue-to-awesomedocuments.yml
@@ -23,6 +25,7 @@ jobs:
       - name: copy/copy
         env:
           ARTIFACT_DIR: dest/artifacts/github.com/${{ github.repository }}/workflows/${{ env.ARTIFACT_KEY }}
+          GITHUB_TOKEN: ${{ env.DEPLOY_SECRETS }}
         run: |
           rm -rf ${{ env.ARTIFACT_DIR }}
           mkdir -p ${{ env.ARTIFACT_DIR }}/.github/workflows
@@ -30,3 +33,10 @@ jobs:
           cp -r .github/ISSUE_TEMPLATE ${{ env.ARTIFACT_DIR }}/.github
           ls -al ${{ env.ARTIFACT_DIR }}/.github
           ls -al ${{ env.ARTIFACT_DIR }}/.github/workflows
+          cd ./dest
+          git add -A
+          git config user.name "${{ env.DEPLOY_USER }}"
+          git config user.email "${{ env.DEPLOY_EMAIL }}"
+          git commit -m "Actions: Update in ${{ github.repository }}" -m "Updated commit url: https://github.com/${{ github.repository }}/tree/${{ github.sha }}"
+          git push
+          cd ..          
