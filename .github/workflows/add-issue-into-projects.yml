@@ -1,9 +1,6 @@
 on:
   issues:
     types: [opened]
-  push:
-    paths:
-      - .github/workflows/add-issue-into-projects.yml
 jobs:
   add:
     runs-on: ubuntu-latest
@@ -32,7 +29,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.USER_PAT_GITHUB_PROJECT }}
         run: |
-          gh project item-add ${{ env.PROJECT_NUMBER }} --format json --owner @me --url https://github.com/kasaikou/thedocuments/issues/10 > item_config.json
+          gh project item-add ${{ env.PROJECT_NUMBER }} --format json --owner @me --url ${{ github.event.issue.url }} > item_config.json
           cat item_config.json
           echo 'ITEM_ID='$(jq '.id' item_config.json) >> $GITHUB_ENV
       - name: project/set-values
