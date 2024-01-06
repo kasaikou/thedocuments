@@ -9,11 +9,10 @@ jobs:
     runs-on: ubuntu-latest
     env:
       ORG: kasaikou
-      OWNER: kasaikou
       PROJECT_NUMBER: 8
     steps:
       - name: project/get-project-data
         env:
           GH_TOKEN: ${{ secrets.USER_PAT_GITHUB_PROJECT }}
         run: |
-          gh project field-list ${{ env.PROJECT_NUMBER }} --format json --owner kasaikou
+          gh project field-list ${{ env.PROJECT_NUMBER }} --format json --owner @me
