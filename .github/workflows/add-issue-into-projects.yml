@@ -15,7 +15,11 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.USER_PAT_GITHUB_PROJECT }}
         run: |
+          gh project list --format json --owner @me > project_config.json
+          cat project_config.json
+          echo 'PROJECT_ID'=$(jq '.projects[] | select(.number==${{ env.PROJECT_NUMBER }}) | .id' project_config.json) >> $GITHUB_ENV
           gh project field-list ${{ env.PROJECT_NUMBER }} --format json --owner @me > project_config.json
+          cat project_config.json
           echo 'STATUS_ID='$(jq '.fields[] | select(.name=="Status") | .id' project_config.json) >> $GITHUB_ENV
           echo 'STATUS_TODO_ID='$(jq '.fields[] | select(.name=="Status") | .options[] | select(.name=="Todo") | .id' project_config.json) >> $GITHUB_ENV
           echo 'START_DATE_ID='$(jq '.fields[] | select(.name=="Start date") | .id' project_config.json) >> $GITHUB_ENV
@@ -24,6 +28,7 @@ jobs:
         run: |
           echo "START_DATE=$(date +"%Y-%m-%d")" >> $GITHUB_ENV
           echo "END_DATE=$(date +"%Y-%m-%d" --date '14 days')" >> $GITHUB_ENV
-      - name: project/set-values
+      - name: project/add-item
         run: |
-          echo "todo: write here"
+          gh projct item-list ${{ env.PROJECT_NUMBER }} --format json --owner @me > item_config.json
+          cat item_config.json
