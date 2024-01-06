@@ -1,0 +1,24 @@
+name: 文章化チケット
+description: 文章として執筆する際に発行するチケット
+labels: [documentation]
+projects: ["kasaikou/8"]
+assignees:
+  - kasaikou
+body:
+  - type: textarea
+    attributes:
+      label: 概要
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Sub Tasks
+      placeholder: >
+        - #1
+        - #2
+        - #3
+  - type: textarea
+    attributes:
+      label: Tips
+      placeholder: >
+        - URLs

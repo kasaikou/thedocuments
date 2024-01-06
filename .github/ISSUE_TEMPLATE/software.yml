@@ -1,0 +1,28 @@
+name: ソフトウェア作成チケット
+description: 何かソフトウェア（管理ツール含む）やサービス，仕組みを作る際に発行するチケット
+title: "[Software]: ${category}: ${ticketName}"
+labels: [software]
+projects: ["kasaikou/8"]
+assignees:
+  - kasaikou
+body:
+  - type: textarea
+    attributes:
+      label: 背景
+      description: なぜこのソフトウェアを作るのかを書く
+  - type: textarea
+    attributes:
+      label: 内容
+      description: 何ができるようになればよいのかを書く
+  - type: textarea
+    attributes:
+      label: Sub Tasks
+      placeholder: >
+        - #1
+        - #2
+        - #3
+  - type: textarea
+    attributes:
+      label: Tips
+      placeholder: >
+        - URLs
