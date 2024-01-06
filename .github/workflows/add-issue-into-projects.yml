@@ -30,5 +30,5 @@ jobs:
           echo "END_DATE=$(date +"%Y-%m-%d" --date '14 days')" >> $GITHUB_ENV
       - name: project/add-item
         run: |
-          gh projct item-list ${{ env.PROJECT_NUMBER }} --format json --owner @me > item_config.json
+          gh project item-list ${{ env.PROJECT_NUMBER }} --format json --owner @me > item_config.json
           cat item_config.json
