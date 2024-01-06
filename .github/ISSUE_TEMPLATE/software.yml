@@ -17,7 +17,7 @@ body:
   - type: textarea
     attributes:
       label: Sub Tasks
-      placeholder: >
+      placeholder: |
         - #1
         - #2
         - #3
