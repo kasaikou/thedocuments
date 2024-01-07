@@ -1,0 +1,20 @@
+name: イベントスケジュールチケット
+description: イベントスケジュールを設定するためのチケット（事前にイベント準備チケットを作成してください）
+title: "[Scheduled]: ${eventName}"
+labels: ["event-scheduled"]
+assignees:
+  - kasaikou
+body:
+  - type: textarea
+    attributes:
+      label: 内容（細かいスケジュールや参考リンクなどもここに書いてください）
+  - type: textarea
+    attributes:
+      label: 事前準備リスト（Issue 編）
+      placeholder: |
+        - #1
+  - type: textarea
+    attributes:
+      label: 事前準備リスト（TODO 編）
+      placeholder: |
+        - [ ] タスク内容...
