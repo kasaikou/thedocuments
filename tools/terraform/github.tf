@@ -19,8 +19,17 @@ resource "github_issue_label" "software" {
   repository = each.value
 
   name        = "software"
-  color       = "D18C07"
+  color       = "B6D078"
   description = "Create application, service or tools"
+}
+
+resource "github_issue_label" "creation" {
+  for_each   = local.github_repositories
+  repository = each.value
+
+  name        = "creation"
+  color       = "D18C07"
+  description = "Output something without articles"
 }
 
 resource "github_issue_label" "other" {
