@@ -32,6 +32,24 @@ resource "github_issue_label" "creation" {
   description = "Output something without articles"
 }
 
+resource "github_issue_label" "music" {
+  for_each   = local.github_repositories
+  repository = each.value
+
+  name        = "music"
+  color       = "C47DE0"
+  description = "About music"
+}
+
+resource "github_issue_label" "movie" {
+  for_each   = local.github_repositories
+  repository = each.value
+
+  name        = "movie"
+  color       = "C28B72"
+  description = "About movie"
+}
+
 resource "github_issue_label" "other" {
   for_each   = local.github_repositories
   repository = each.value
