@@ -19,8 +19,35 @@ resource "github_issue_label" "software" {
   repository = each.value
 
   name        = "software"
-  color       = "D18C07"
+  color       = "B6D078"
   description = "Create application, service or tools"
+}
+
+resource "github_issue_label" "creation" {
+  for_each   = local.github_repositories
+  repository = each.value
+
+  name        = "creation"
+  color       = "D18C07"
+  description = "Output something without articles"
+}
+
+resource "github_issue_label" "music" {
+  for_each   = local.github_repositories
+  repository = each.value
+
+  name        = "music"
+  color       = "C47DE0"
+  description = "About music"
+}
+
+resource "github_issue_label" "movie" {
+  for_each   = local.github_repositories
+  repository = each.value
+
+  name        = "movie"
+  color       = "C28B72"
+  description = "About movie"
 }
 
 resource "github_issue_label" "other" {
