@@ -14,6 +14,24 @@ resource "github_issue_label" "documentation" {
   description = "Improvements or additions to documentation"
 }
 
+resource "github_issue_label" "event" {
+  for_each   = local.github_repositories
+  repository = each.value
+
+  name        = "event-scheduled"
+  color       = "3A31E1"
+  description = "Event schedule"
+}
+
+resource "github_issue_label" "event_preparation" {
+  for_each   = local.github_repositories
+  repository = each.value
+
+  name        = "event-preparation"
+  color       = "1A1151"
+  description = "Event preparation"
+}
+
 resource "github_issue_label" "software" {
   for_each   = local.github_repositories
   repository = each.value

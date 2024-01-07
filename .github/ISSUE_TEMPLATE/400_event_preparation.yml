@@ -1,0 +1,27 @@
+name: イベント準備チケット
+description: イベント準備を行う際のチケット
+title: "[Event-Preparation]: ${ticketName}"
+labels: [event-preparation]
+assignees:
+  - kasaikou
+body:
+  - type: textarea
+    attributes:
+      label: 背景
+      description: なぜこの Issue を書いているのかを書く
+  - type: textarea
+    attributes:
+      label: 内容
+      description: 何ができるようになればよいのかを書く
+  - type: textarea
+    attributes:
+      label: Sub Tasks
+      placeholder: |
+        - #1
+        - #2
+        - #3
+  - type: textarea
+    attributes:
+      label: Tips
+      placeholder: |
+        - URLs
