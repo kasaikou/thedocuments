@@ -1,15 +1,14 @@
-name: その他チケット
-description: 他に該当しないときに発行するチケット（後日ラベリングされる可能性はちょっとある）
-title: "[Other]: ${category}: ${ticketName}"
-labels: [other]
-projects: ["kasaikou/8"]
+name: ソフトウェア作成チケット
+description: 何かソフトウェア（管理ツール含む）やサービス，仕組みを作る際に発行するチケット
+title: "[Software]: ${category}: ${ticketName}"
+labels: [software]
 assignees:
   - kasaikou
 body:
   - type: textarea
     attributes:
       label: 背景
-      description: なぜこの Issue を書いているのかを書く
+      description: なぜこのソフトウェアを作るのかを書く
   - type: textarea
     attributes:
       label: 内容
@@ -17,7 +16,7 @@ body:
   - type: textarea
     attributes:
       label: Sub Tasks
-      placeholder: >
+      placeholder: |
         - #1
         - #2
         - #3

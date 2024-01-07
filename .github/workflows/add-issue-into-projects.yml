@@ -1,0 +1,41 @@
+on:
+  issues:
+    types: [opened]
+jobs:
+  add:
+    runs-on: ubuntu-latest
+    env:
+      ORG: kasaikou
+      PROJECT_NUMBER: 8
+    steps:
+      - name: project/get-project-data
+        env:
+          GH_TOKEN: ${{ secrets.USER_PAT_GITHUB_PROJECT }}
+        run: |
+          gh project list --format json --owner @me > project_config.json
+          cat project_config.json
+          echo 'PROJECT_ID'=$(jq '.projects[] | select(.number==${{ env.PROJECT_NUMBER }}) | .id' project_config.json) >> $GITHUB_ENV
+          gh project field-list ${{ env.PROJECT_NUMBER }} --format json --owner @me > project_config.json
+          cat project_config.json
+          echo 'STATUS_ID='$(jq '.fields[] | select(.name=="Status") | .id' project_config.json) >> $GITHUB_ENV
+          echo 'STATUS_TODO_ID='$(jq '.fields[] | select(.name=="Status") | .options[] | select(.name=="Todo") | .id' project_config.json) >> $GITHUB_ENV
+          echo 'START_DATE_ID='$(jq '.fields[] | select(.name=="Start date") | .id' project_config.json) >> $GITHUB_ENV
+          echo 'END_DATE_ID='$(jq '.fields[] | select(.name=="End date") | .id' project_config.json) >> $GITHUB_ENV        
+      - name: project/get-date
+        run: |
+          echo "START_DATE=$(date +"%Y-%m-%d")" >> $GITHUB_ENV
+          echo "END_DATE=$(date +"%Y-%m-%d" --date '14 days')" >> $GITHUB_ENV
+      - name: project/add-item
+        env:
+          GH_TOKEN: ${{ secrets.USER_PAT_GITHUB_PROJECT }}
+        run: |
+          gh project item-add ${{ env.PROJECT_NUMBER }} --format json --owner @me --url ${{ github.event.issue.html_url }} > item_config.json
+          cat item_config.json
+          echo 'ITEM_ID='$(jq '.id' item_config.json) >> $GITHUB_ENV
+      - name: project/set-values
+        env:
+          GH_TOKEN: ${{ secrets.USER_PAT_GITHUB_PROJECT }}
+        run: |
+          gh project item-edit --format json --project-id ${{ env.PROJECT_ID }} --id ${{ env.ITEM_ID }} --field-id ${{ env.STATUS_ID }} --single-select-option-id ${{ env.STATUS_TODO_ID }}
+          gh project item-edit --format json --project-id ${{ env.PROJECT_ID }} --id ${{ env.ITEM_ID }} --field-id ${{ env.START_DATE_ID }} --date ${{ env.START_DATE }}
+          gh project item-edit --format json --project-id ${{ env.PROJECT_ID }} --id ${{ env.ITEM_ID }} --field-id ${{ env.END_DATE_ID }} --date ${{ env.END_DATE }}

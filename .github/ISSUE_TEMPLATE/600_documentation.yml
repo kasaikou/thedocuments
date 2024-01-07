@@ -1,7 +1,6 @@
 name: 文章化チケット
 description: 文章として執筆する際に発行するチケット
 labels: [documentation]
-projects: ["kasaikou/8"]
 assignees:
   - kasaikou
 body:
