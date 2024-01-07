@@ -1,0 +1,32 @@
+name: 創作物作成/公開チケット【動画】
+description: 動画を作成した際に発行するチケット
+title: "[Creation]: 動画: タイトル"
+labels: [creation, movie]
+assignees:
+  - kasaikou
+body:
+  - type: textarea
+    attributes:
+      label: 特記事項
+      description: 何か特殊な事情がある場合はここに記載してください
+  - type: checkboxes
+    attributes:
+      label: 共通 TODO
+      description: Issue 作成時には本件で不要なタスク/完了したタスクにチェックをつけてください
+      options:
+        - label: 素材を獲得する
+        - label: 動画を作成する
+        - label: 動画を納品する
+  - type: textarea
+    attributes:
+      label: 特殊 TODO
+      description: 本件のために必要な特別なタスクを作成してください
+      placeholder: |
+        - [ ] 特殊タスク1...
+        - [ ] 特殊タスク1...
+  - type: textarea
+    attributes:
+      label: Tips
+      description: 本件に関係しそうな情報を記載してください
+      placeholder: |
+        - URL...
