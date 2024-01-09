@@ -15,7 +15,7 @@ jobs:
           gh project list --format json --owner @me > project_config.json
           echo 'PROJECT_ID'=$(jq '.projects[] | select(.number==${{ env.PROJECT_NUMBER }}) | .id' project_config.json) >> $GITHUB_ENV
           gh project item-list ${{ env.PROJECT_NUMBER }} --format json --owner @me > project_item.json
-          echo 'PROJECT_ITEM_ID'=$(jq '.items[] | select(.content.url==${{ github.event.issue.html_url }}) | .id' project_item.json) >> $GITHUB_ENV
+          echo 'PROJECT_ITEM_ID'=$(jq '.items[] | select(.content.url=="${{ github.event.issue.html_url }}") | .id' project_item.json) >> $GITHUB_ENV
           gh project field-list ${{ env.PROJECT_NUMBER }} --format json --owner @me > project_config.json
           cat project_config.json
           echo 'END_DATE_ID='$(jq '.fields[] | select(.name=="End date") | .id' project_config.json) >> $GITHUB_ENV
@@ -23,6 +23,7 @@ jobs:
         run:
           echo "END_DATE=$(date +"%Y-%m-%d")" >> $GITHUB_ENV
       - name: project/update-item
+        if: ${{ env.PROJECT_ITEM_ID }} == ""
         env:
           GH_TOKEN: ${{ secrets.USER_PAT_GITHUB_PROJECT }}
         run:
