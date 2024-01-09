@@ -13,7 +13,6 @@ jobs:
           GH_TOKEN: ${{ secrets.USER_PAT_GITHUB_PROJECT }}
         run: |
           gh project list --format json --owner @me > project_config.json
-          cat project_config.json
           echo 'PROJECT_ID'=$(jq '.projects[] | select(.number==${{ env.PROJECT_NUMBER }}) | .id' project_config.json) >> $GITHUB_ENV
           gh project item-list ${{ env.PROJECT_NUMBER }} --format json --owner @me > project_item.json
           echo 'PROJECT_ITEM_ID'=$(jq '.items[] | select(.content.url==${{ github.event.issue.html_url }}) | .id' project_item.json) >> $GITHUB_ENV
