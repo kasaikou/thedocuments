@@ -23,7 +23,7 @@ jobs:
         run:
           echo "END_DATE=$(date +"%Y-%m-%d")" >> $GITHUB_ENV
       - name: project/update-item
-        if: ${{ env.PROJECT_ITEM_ID }} == ""
+        if: env.PROJECT_ITEM_ID != ''
         env:
           GH_TOKEN: ${{ secrets.USER_PAT_GITHUB_PROJECT }}
         run:
