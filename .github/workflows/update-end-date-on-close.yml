@@ -26,5 +26,5 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.USER_PAT_GITHUB_PROJECT }}
         run:
-          gh project item-edit --format json --project-id ${{ env.PROJECT_ID }} --id ${{ env.ITEM_ID }} --field-id ${{ env.END_DATE_ID }} --date ${{ env.END_DATE }}
+          gh project item-edit --format json --project-id ${{ env.PROJECT_ID }} --id ${{ env.PROJECT_ITEM_ID }} --field-id ${{ env.END_DATE_ID }} --date ${{ env.END_DATE }}
 
