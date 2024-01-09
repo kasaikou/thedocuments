@@ -1,0 +1,19 @@
+on:
+  # issues:
+  #   types: [closed]
+  push:
+    paths:
+      .github/workflows/update-end-date-on-close.yml
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    env:
+      ORG: kasaikou
+      PROJECT_NUMBER: 8
+    steps:
+      - name: project/get-issue-data
+        env:
+          GH_TOKEN: ${{ secrets.USER_PAT_GITHUB_PROJECT }}
+        run: |
+          gh project item-list ${{ env.PROJECT_NUMBER }} --format json --owner @me > project_item.json
+          cat project_item.json
