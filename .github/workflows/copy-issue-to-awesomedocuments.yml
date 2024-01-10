@@ -4,6 +4,7 @@ on:
       - main
     paths:
       - .github/workflows/add-issue-into-projects.yml
+      - .github/workflows/update-end-date-on-close.yml
       - .github/workflows/copy-issue-to-awesomedocuments.yml
       - .github/ISSUE_TEMPLATE/**
 env:
@@ -30,6 +31,7 @@ jobs:
           rm -rf ${{ env.ARTIFACT_DIR }}
           mkdir -p ${{ env.ARTIFACT_DIR }}/.github/workflows
           cp -f .github/workflows/add-issue-into-projects.yml ${{ env.ARTIFACT_DIR }}/.github/workflows/
+          cp -f .github/workflows/update-end-date-on-close.yml ${{ env.ARTIFACT_DIR }}/.github/workflows/
           cp -r .github/ISSUE_TEMPLATE ${{ env.ARTIFACT_DIR }}/.github
           ls -al ${{ env.ARTIFACT_DIR }}/.github
           ls -al ${{ env.ARTIFACT_DIR }}/.github/workflows
